@@ -1,5 +1,9 @@
 #Para poder predecir de manera eficiente ciertos eventos reemplazaremos los valores NA por los promedios de cada columna
 #En este caso, las columnas agent y company son las que poseen valores NA
+#dataframe limpio
+hotel_data_agentlimpio <- hotel_data[!is.na(hotel_data$agent),]
+
+
 #Podemos aplicar l eliminación de filas cuyo agent es NA debido a que son pocos casos y no alteraria en gran medida la predicción
 length(hotel_data$agent)
 sum(is.na(hotel_data$agent))
