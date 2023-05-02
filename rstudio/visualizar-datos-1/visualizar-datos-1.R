@@ -18,40 +18,40 @@ sum(!is.na(hotel_data$agent))
 length(hotel_data_agentlimpio$agent)
 
 #contar total de agentes de cada tipo
-contar_tipo_agent <- function(dataset, variable){
-  id <- table(dataset[[variable]])
+contar_tipo_agent <- function(dataframe, variable){
+  id <- table(dataframe[[variable]])
   return(id)
 }
 contar_tipo_agent(hotel_data_agentlimpio, 'agent')
 
 #tipos de agente más usados
-agent_mas_usados <- function(dataset, variable, n){
-  mas_usados <- contar_tipo_agent(dataset, variable)
+agent_mas_usados <- function(dataframe, variable, n){
+  mas_usados <- contar_tipo_agent(dataframe, variable)
   n_mas_usados <- sort(mas_usados, decreasing = TRUE)
   return(n_mas_usados[1:n])
 }
 agent_mas_usados(hotel_data_agentlimpio, 'agent', 5)
 
 #grafico
-grafico_agent_mas_usados <- function(dataset, variable, n){
-  mas_usados <- contar_tipo_agent(dataset, variable)
+grafico_agent_mas_usados <- function(dataframe, variable, n){
+  mas_usados <- contar_tipo_agent(dataframe, variable)
   n_mas_usados <- sort(mas_usados, decreasing = TRUE)
   id_agents <- names(n_mas_usados[1:n])
   valor_agents <- n_mas_usados[1:n]
-  color_agent <- c(rep("#C4FB24", 1), rep("#4BFB24", 1), rep("#24FB6F", 1), rep("#24FBC4", 1), rep("#24D1FB", 1), rep("black", length(id_agents)-5))
+  color_agent <- c(rep("#C4FB24", 1), rep("#4BFB24", 1), rep("#24FB6F", 1), rep("#24FBC4", 1), rep("#24D1FB", 1), rep("black", length(id_agents)))
   barplot(valor_agents, names.arg=id_agents, xlab = 'ID Agents', ylab = 'Frecuencia', col = color_agent)
 }
 grafico_agent_mas_usados(hotel_data_agentlimpio, 'agent', 5)
 
 #tipo de paquete más usados por estos agentes
-meal_por_agente <- function(dataset, variableA, variableM, n){
-  contador <- table(dataset[, variableA], dataset[, variableM])
+meal_por_agente <- function(dataframe, variableA, variableM, n){
+  contador <- table(dataframe[, variableA], dataframe[, variableM])
   
-  n_mas_usados <- sort(table(dataset[, variableA]), decreasing = TRUE)
+  n_mas_usados <- sort(table(dataframe[, variableA]), decreasing = TRUE)
   id_agents <- names(n_mas_usados[1:n])
   
   for (agent in id_agents) {
-    cat(paste0('Agente: ', agent, '\n'))
+    cat(paste0('agentID: ', agent, '\n'))
     mas_usados <- contador[agent, ]
     print(mas_usados[order(mas_usados, decreasing = TRUE)])
     cat("\n")
@@ -63,10 +63,10 @@ meal_por_agente(hotel_data_agentlimpio, 'agent', 'meal', 5)
 install.packages("ggplot2")
 library(ggplot2)
 
-grafico_meal_por_agente <- function(dataset, variableA, columna_meal, n) {
-  contador <- table(dataset[, variableA], dataset[, columna_meal])
+grafico_meal_por_agente <- function(dataframe, variableA, variableM, n) {
+  contador <- table(dataframe[, variableA], dataframe[, variableM])
   
-  n_mas_usados <- sort(table(dataset[, variableA]), decreasing = TRUE)
+  n_mas_usados <- sort(table(dataframe[, variableA]), decreasing = TRUE)
   id_agents <- names(n_mas_usados[1:n])
   
   agent_dataframe <- data.frame()
